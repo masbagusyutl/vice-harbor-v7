@@ -18,19 +18,19 @@ export function setupScene(G, name) {
     P.respect = 160;
     game.setWanted(2);
     game.setJobState(2, 2); // Harbor Run — deliver the package
-    // 5 traffic cars ahead on the coastal road, 1 police car closing in at the side.
-    // Tight loops (±8) so the pack holds its staging for the shot.
-    const spots = [[268, 108], [273, 96], [267, 84], [272, 72], [269, 60]];
+    // 5 traffic cars ahead in two lanes, cruising at ~19 to match the player, so the
+    // pack holds for any capture delay; police closing in alongside.
+    const spots = [[270, 106], [277, 98], [270, 90], [277, 84], [270, 80]];
     const tcolors = [0xd83838, 0x2e6ad8, 0xe8c832, 0x38b878, 0xe8e8e8];
     for (let i = 0; i < spots.length; i++) {
       const [x, z] = spots[i];
       const car = new TrafficCar(G, makeCarMesh(tcolors[i % tcolors.length]),
-        [[x, z + 8], [x, z - 8]], 5);
+        [[x, z], [x, z - 400]], 19);
       car.pos.set(x, 0, z);
       car.heading = -Math.PI / 2;
       game.traffic.push(car);
     }
-    const pol = new PoliceCar(G, makeCarMesh(0x1a2a4a, { police: true }), 276, 100);
+    const pol = new PoliceCar(G, makeCarMesh(0x1a2a4a, { police: true }), 278, P.z - 25);
     pol.heading = -Math.PI / 2;
     game.police.push(pol);
     game.spawnPeds(10, { x0: 282, x1: 296, z0: 20, z1: 150 });
@@ -39,9 +39,11 @@ export function setupScene(G, name) {
     G.stats.collectibles = [0, 1, 2, 3, 4, 5];
     G.turf = { palm: true };
     G.crew = ['petra'];
-    G.camFixed = { pos: [270, 2.6, 136], look: [270, 5, 85] };
-    G.camFollow = null;
-    G.autoDrive = false;
+    G.camFixed = null;
+    // Low close follow camera: player car fills the lower third, pack ahead in frame.
+    G.camFollow = { side: 3.5, back: 6, height: 2.4, lookAhead: 14, lookY: 3.5 };
+    G.autoDrive = true;
+    if (P.car) P.car.speed = 20; // 72 km/h on the speedometer from the first frame
     G.sceneTitle = 'VICE HARBOR';
     return true;
   }

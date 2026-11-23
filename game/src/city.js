@@ -8,7 +8,7 @@ const SKY_KEYS = [
   { h: 0, top: 0x0a0a24, hor: 0x1a1a3a },
   { h: 6, top: 0x5a4a7a, hor: 0xff8a5a },
   { h: 12, top: 0x3a7bd5, hor: 0xa8d8e8 },
-  { h: 17.5, top: 0x6b4a8f, hor: 0xff9a3c },
+  { h: 17.5, top: 0x452a7d, hor: 0xff9a3c },
   { h: 18.8, top: 0x7a4a7a, hor: 0xff7a4d },
   { h: 21.5, top: 0x1a1033, hor: 0x4a2a6b },
   { h: 23, top: 0x060a1e, hor: 0x12264d },
@@ -341,8 +341,8 @@ export function buildCity(G) {
     else if (dusk) waterMat.color.setHex(0x7a4a5e); // sunset reflected in the harbour
     else waterMat.color.setHex(0x14506e);
     waterMat.specular.setHex(dusk ? 0xffaa88 : 0x88bbdd);
-    cloudMat.opacity = dusk ? 0.14 : (0.08 + 0.25 * Math.max(day, 0));
-    cloudMat.color.setHex(night > 0.5 ? 0x9a8ac8 : (dusk ? 0xffc8a8 : 0xffffff));
+    cloudMat.opacity = dusk ? 0.14 : (golden > 0.4 ? 0.45 : (0.08 + 0.25 * Math.max(day, 0)));
+    cloudMat.color.setHex(night > 0.5 ? 0x9a8ac8 : ((dusk || golden > 0.4) ? 0xffc8a8 : 0xffffff));
     G.nightFactor = night;
   }
 

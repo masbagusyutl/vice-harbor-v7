@@ -281,7 +281,7 @@ export async function runTests(G) {
     check('chase player in car', P.car !== null);
     check('chase has police', game.police.length >= 1);
     check('chase dense traffic', game.traffic.length >= 14);
-    check('chase low close camera', G.camFixed !== null && G.camFixed.pos[1] < 5);
+    check('chase low close camera', G.camFollow !== null && G.camFollow.back <= 8 && G.camFollow.height < 3.5);
     check('chase job is Harbor Run', G.job && G.job.def.id === 2);
     check('scene market loads', setupScene(G, 'market') === true);
     check('market is purple night', Math.abs(G.hour - 21.5) < 0.01);

@@ -204,7 +204,7 @@ function updateCamera(dt) {
     const cf = G.camFollow;
     camera.position.set(P.pos.x + r.x * cf.side - f.x * cf.back, cf.height,
       P.pos.z + r.z * cf.side - f.z * cf.back);
-    camera.lookAt(P.pos.x + f.x * cf.lookAhead, 1.5, P.pos.z + f.z * cf.lookAhead);
+    camera.lookAt(P.pos.x + f.x * cf.lookAhead, cf.lookY ?? 1.5, P.pos.z + f.z * cf.lookAhead);
     return;
   }
   if (P.car || P.boat) {
